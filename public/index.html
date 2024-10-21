@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Star Wars Karakterer</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: 'Star Jedi', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-shadow: 3px 3px 5px rgba(255, 215, 0, 0.8);
+    }
+
+    .character-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      width: 80%;
+      max-width: 600px;
+    }
+
+    .character-list li {
+      background-color: #2c2f37;
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .character-list li div {
+      margin-bottom: 15px;
+    }
+
+    input[type="text"], textarea {
+      background-color: #434a54;
+      color: white;
+      border: none;
+      padding: 8px;
+      border-radius: 5px;
+      width: 100%;
+      font-size: 1rem;
+    }
+
+    textarea {
+      height: 80px;
+      resize: vertical;
+    }
+
+    input[type="text"]:focus, textarea:focus {
+      outline: none;
+      background-color: #2c2f37;
+    }
+
+    button {
+      background-color: #f2d352;
+      border: none;
+      color: black;
+      padding: 10px 20px;
+      margin-right: 10px;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #d0b14a;
+    }
+
+    button:active {
+      background-color: #b09e42;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Styling for mobile */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .character-list li {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Star Wars Karakterer</h1>
+  <ul class="character-list" id="character-list"></ul>
+</div>
+
+<script>
+  const characters = [
+    { id: 1, name: 'Diaco Skywalker', description: 'Den vildeste programmør, der også er en Jedi-ridder om natten.' },
+    { id: 2, name: 'Søren Vader', description: 'Sammensætning ondskab og dovenskab.' },
+    { id: 3, name: 'R2-Morten', description: 'Robotten der lod verden gå under, fordi Liverpool tabte ligaen.' }
+  ];
+
+  function renderCharacters() {
+    const characterList = document.getElementById('character-list');
+    characterList.innerHTML = ''; // Tøm listen før rendering
+
+    characters.forEach(character => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+                    <div>
+                        <strong>Navn:</strong>
+                        <input type="text" id="name-${character.id}" value="${character.name}">
+                    </div>
+                    <div>
+                        <strong>Beskrivelse:</strong>
+                        <textarea id="description-${character.id}">${character.description}</textarea>
+                    </div>
+                    <div>
+                        <button onclick="updateCharacter(${character.id})">Opdater</button>
+                        <button onclick="deleteCharacter(${character.id})">Slet</button>
+                    </div>
+                `;
+      characterList.appendChild(li);
+    });
+  }
+
+  function updateCharacter(id) {
+    const name = document.getElementById('name-' + id).value;
+    const description = document.getElementById('description-' + id).value;
+
+    const character = characters.find(char => char.id === id);
+    if (character) {
+      character.name = name;
+      character.description = description;
+    }
+
+    alert('Karakter opdateret!');
+    renderCharacters();
+  }
+
+  function deleteCharacter(id) {
+    const index = characters.findIndex(char => char.id === id);
+    if (index !== -1) {
+      characters.splice(index, 1);  // Fjern karakteren
+    }
+
+    alert('Karakter slettet!');
+    renderCharacters();
+  }
+
+  renderCharacters();
+</script>
+</body>
+</html>
